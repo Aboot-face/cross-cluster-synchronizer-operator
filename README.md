@@ -1,0 +1,1 @@
+# cross-cluster-synchronizer-operator
