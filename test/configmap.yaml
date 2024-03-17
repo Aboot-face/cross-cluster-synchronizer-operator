@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-configmap
+  namespace: test
+  labels:
+    mylabel: "somethingsomething"
+data:
+  key1: "value1"
+  key2: "value2"
+

@@ -1,0 +1,17 @@
+apiVersion: myoperator.example.com/v1
+kind: SyncConfig
+metadata:
+  name: test-sync-configmap
+spec:
+  sourceCluster: "cluster1"
+  targetClusters:
+    - "cluster2"
+  resources:
+    - kind: "ConfigMap"
+      name: "test-configmap"
+    - kind: "ConfigMap"
+      name: "test-configmap2"
+  namespaces:
+    - "test"
+  namespaceHandling: "create"
+
