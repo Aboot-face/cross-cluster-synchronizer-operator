@@ -10,9 +10,9 @@ Currently, it supports specifying specific ConfigMaps and Secrets to apply from 
 
 ### Close goals
 1. Support for other simple resources like SA, RBAC, PVC, etc.
-2. Monitoring configmaps after a SyncConfig resource is deployed.
+2. Monitoring ConfigMaps after a SyncConfig resource is deployed.
 3. Namespace monitoring of specific resources.
-4. ~~support for specifying specific namespaces for resources (specific configmaps or secrets).~~
+4. ~~support for specifying specific namespaces for resources (specific ConfigMaps or secrets).~~
 5. Containerization with Helm deployment as well as kubeconfig secret handling.
 
 ### Far goals
@@ -47,9 +47,16 @@ spec:
 ```
 
 This will sync the `test-configmap2` resource in the `test` namespace to the `cluster2` cluster from the `cluster1` cluster. It will also sync all ConfigMaps in the `test2` namespace.
-`namespaceHandling` is for if a namespace is not detected, how does the operator handle this. The two valid options are `create` and `fail`. These are pretty self explanitory.
+`namespaceHandling` deals with how absent namespaces are handled in the target clusters. The two valid options are `create` and `fail`. These are pretty self explanitory.
 
 Just keep in mind that **currently** the resources are only synced when the `SyncConfig` CR is applied to the cluster.
+
+#### Required Resource Key-value pairs
+`kind` is required.
+`name` is optional as it is used to specify a specific resource in a namespace. **If you are syncing the entire namespace, then ensure invidivual resource syncs are removed**.
+`namespace` is required if name is specified.
+
+If `kind` is specified and `name` and `namespace` are absent, then theoretically it should sync all resources of the `kind` (has not been tested).
 
 #### Cluster Authentication
 
