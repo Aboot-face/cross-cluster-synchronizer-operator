@@ -27,10 +27,6 @@ spec:
                   type: array
                   items:
                     type: string
-                namespaces:
-                  type: array
-                  items:
-                    type: string
                 resources:
                   type: array
                   items:
@@ -39,6 +35,8 @@ spec:
                       kind:
                         type: string
                       name:
+                        type: string
+                      namespace:
                         type: string
                 namespaceHandling:
                   type: string

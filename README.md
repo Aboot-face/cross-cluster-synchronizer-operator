@@ -12,7 +12,7 @@ Currently, it supports specifying specific ConfigMaps and Secrets to apply from 
 1. Support for other simple resources like SA, RBAC, PVC, etc.
 2. Monitoring configmaps after a SyncConfig resource is deployed.
 3. Namespace monitoring of specific resources.
-4. Support for specifying specific namespaces for resources (specific configmaps or secrets).
+4. ~~support for specifying specific namespaces for resources (specific configmaps or secrets).~~
 5. Containerization with Helm deployment as well as kubeconfig secret handling.
 
 ### Far goals
@@ -27,8 +27,8 @@ Obviously these are not the only goals, but some good ones to start.
 
 Currently, the operator is managed by a CRD: `SyncConfig`
 
-#### Example syncConfig
-```
+#### Example SyncConfig
+```yaml
 apiVersion: myoperator.example.com/v1
 kind: SyncConfig
 metadata:
@@ -39,15 +39,14 @@ spec:
     - "cluster2"
   resources:
     - kind: "ConfigMap"
-      name: "test-configmap"
+      namespace: "test2"
     - kind: "ConfigMap"
       name: "test-configmap2"
-  namespaces:
-    - "test"
+      namespace: "test"
   namespaceHandling: "create"
 ```
 
-This will sync the `test-configmap` and `test-configmap2` resources to the `cluster2` cluster from the `cluster1` cluster. These are all in the `test` namespace.
+This will sync the `test-configmap2` resource in the `test` namespace to the `cluster2` cluster from the `cluster1` cluster. It will also sync all ConfigMaps in the `test2` namespace.
 `namespaceHandling` is for if a namespace is not detected, how does the operator handle this. The two valid options are `create` and `fail`. These are pretty self explanitory.
 
 Just keep in mind that **currently** the resources are only synced when the `SyncConfig` CR is applied to the cluster.
@@ -60,9 +59,12 @@ Dummy kubeconfigs are inside the `kube/` dir currently to demonstrate.
 
 ## Install
 
-Currently, all you have to do is clone the repo: `git clone https://github.com/Aboot-face/cross-cluster-synchronizer-operator.git CCS-Operator; cd CCS-Operator`.
-
-Then run `kubectl apply -f app/syncconfig.yaml; kopf run app/app.py <-n namespace (optional as it shouldn't really matter)>`.
+Run these commands to download and start the operator:
+```git clone https://github.com/Aboot-face/cross-cluster-synchronizer-operator.git CCS-Operator
+cd CCS-Operator
+kubectl apply -f app/syncconfig.yaml
+kopf run app/app.py <-n namespace (optional as it shouldn't really matter)>
+```
 
 Then you can configure the kubeconfigs for your clusters using the naming scheme specified above. There is a sample `SyncConfig` in `test/` for you to specify your configuration. 
 

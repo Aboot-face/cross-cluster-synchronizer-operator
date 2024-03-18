@@ -8,10 +8,9 @@ spec:
     - "cluster2"
   resources:
     - kind: "ConfigMap"
-      name: "test-configmap"
+      namespace: "test2"
     - kind: "ConfigMap"
       name: "test-configmap2"
-  namespaces:
-    - "test"
+      namespace: "test"
   namespaceHandling: "create"
 
