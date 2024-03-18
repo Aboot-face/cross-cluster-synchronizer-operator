@@ -47,13 +47,13 @@ spec:
 ```
 
 Function:
-```
+```yaml
 - kind: "ConfigMap"
   namespace: "test2"
 ```
 - This will sync all `ConfigMap` resources in the `test2` namespace from the `sourceCluster` to all the clusters in the `targetClusters` list.
 
-```
+```yaml
 - kind: "ConfigMap"
   name: "test-configmap2"
   namespace: "test"
