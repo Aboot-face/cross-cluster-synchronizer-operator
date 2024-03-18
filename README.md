@@ -81,7 +81,8 @@ Dummy kubeconfigs are inside the `kube/` dir currently to demonstrate.
 ## Install
 
 Run these commands to download and start the operator:
-```git clone https://github.com/Aboot-face/cross-cluster-synchronizer-operator.git CCS-Operator
+```shell
+git clone https://github.com/Aboot-face/cross-cluster-synchronizer-operator.git CCS-Operator
 cd CCS-Operator
 kubectl apply -f app/syncconfig.yaml
 kopf run app/app.py <-n namespace (optional as it shouldn't really matter)>
