@@ -46,15 +46,29 @@ spec:
   namespaceHandling: "create"
 ```
 
-This will sync the `test-configmap2` resource in the `test` namespace to the `cluster2` cluster from the `cluster1` cluster. It will also sync all ConfigMaps in the `test2` namespace.
-`namespaceHandling` deals with how absent namespaces are handled in the target clusters. The two valid options are `create` and `fail`. These are pretty self explanitory.
+Function:
+```
+- kind: "ConfigMap"
+  namespace: "test2"
+```
+- This will sync all `ConfigMap` resources in the `test2` namespace from the `sourceCluster` to all the clusters in the `targetClusters` list.
+
+```
+- kind: "ConfigMap"
+  name: "test-configmap2"
+  namespace: "test"
+```
+
+- This will sync the `test-configmap2` resource (specified in the `kind` key/value) in the `test` namespace from the `sourceCluster` to all the clusters in the `targetClusters` list.`
+
+- `namespaceHandling` deals with how absent namespaces are handled in the target clusters. The two valid options are `create` and `fail`. These are pretty self explanitory.
 
 Just keep in mind that **currently** the resources are only synced when the `SyncConfig` CR is applied to the cluster.
 
 #### Required Resource Key-value pairs
-`kind` is required.
-`name` is optional as it is used to specify a specific resource in a namespace. **If you are syncing the entire namespace, then ensure invidivual resource syncs are removed**.
-`namespace` is required if name is specified.
+- `kind` is required.
+- `name` is optional as it is used to specify a specific resource in a namespace. **If you are syncing the entire namespace, then ensure invidivual resource syncs are removed**.
+- `namespace` is required if name is specified.
 
 If `kind` is specified and `name` and `namespace` are absent, then theoretically it should sync all resources of the `kind` (has not been tested).
 
